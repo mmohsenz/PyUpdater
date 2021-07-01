@@ -153,9 +153,9 @@ class Patch(object):
                 return
 
             try:
-                patch_num = self._config["patches"][_name]
+                patch_num = self._config["patches"][_name][_channel][_plat]
                 log.debug("Found patch number")
-                self._config["patches"][_name] += 1
+                self._config["patches"][_name][_channel][_plat] += 1
             except KeyError:
                 log.debug("Cannot find patch number")
                 # If no patch number we will start at 1
@@ -165,7 +165,13 @@ class Patch(object):
                     self._config["patches"] = {}
                 if _name not in self._config["patches"].keys():
                     log.debug("Adding %s to patches version meta", _name)
-                    self._config["patches"][_name] = patch_num + 1
+                    self._config["patches"][_name] = {}
+                if _channel not in self._config["patches"][_name].keys():
+                    log.debug("Adding %s to %s version meta", _channel, _name)
+                    self._config["patches"][_name][_channel] = {}
+                if _plat not in self._config["patches"][_name][_channel].keys():
+                    log.debug("Adding %s to %s version meta", _plat, _channel)
+                    self._config["patches"][_name][_channel][_plat] = patch_num + 1
             self.patch_num = patch_num + 1
             log.debug("Patch Number: %s", self.patch_num)
             self.ok = True
