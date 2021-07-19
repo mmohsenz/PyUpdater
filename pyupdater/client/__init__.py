@@ -445,7 +445,8 @@ class Client(object):
                         headers=self.headers,
                         http_timeout=self.http_timeout,
                     )
-                data = fd.download_verify_return()
+                with _ChDir(self.data_dir):
+                    data = fd.download_verify_return()
                 try:
                     decompressed_data = _gzip_decompress(data)
                 except IOError:
@@ -479,7 +480,8 @@ class Client(object):
                     headers=self.headers,
                     http_timeout=self.http_timeout,
                 )
-            data = fd.download_verify_return()
+            with _ChDir(self.data_dir):
+                data = fd.download_verify_return()
             try:
                 decompressed_data = _gzip_decompress(data)
             except IOError:
