@@ -594,9 +594,9 @@ class LibUpdate(object):
                 log.debug("Extracting Update")
                 archive_ext = os.path.splitext(self.filename)[1].lower()
 
-                if archive_ext in [".gz", ".bz2"]:
+                if archive_ext in [".tar", ".gz", ".bz2"]:
                     try:
-                        mode = "r:{}".format(archive_ext[1:])
+                        mode = "r:{}".format("" if archive_ext == ".tar" else archive_ext[1:])
                         with tarfile.open(self.filename, mode) as tfile:
                             # Extract file update to current
                             # directory.

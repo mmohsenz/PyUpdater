@@ -301,7 +301,7 @@ def make_archive(name, target, version, archive_format):
     # Zip does not preserve file permissions on nix & mac
     # tar.gz creates full file path
     with paths.ChDir(file_dir):
-        ext = "gztar"
+        ext = "tar"
         if archive_format == "default":
             if system.get_system() == "win":
                 ext = "zip"

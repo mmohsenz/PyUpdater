@@ -149,7 +149,7 @@ class Package(object):
         # seems to produce the best diffs.
         # Tests on homepage: https://github.com/Digital-Sapphire/PyUpdater
         # Zip doesn't keep +x permissions. Only using gz for now.
-        self.supported_extensions = [".zip", ".gz", ".bz2"]
+        self.supported_extensions = [".zip", ".tar", ".gz", ".bz2"]
         self.ignored_files = [".DS_Store"]
         self.extract_info(filename)
 
