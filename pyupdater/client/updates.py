@@ -421,12 +421,6 @@ class LibUpdate(object):
         # The platform we are targeting
         self.platform = data.get("platform")
 
-        # The channel we are targeting
-        self.channel = data.get("channel", "stable")
-
-        # How strict to treat the channel requirement
-        self.strict = data.get("strict")
-
         # Progress callbacks
         self.progress_hooks = data.get("progress_hooks")
 
@@ -451,21 +445,19 @@ class LibUpdate(object):
         self.strategy = data.get("strategy", UpdateStrategy.DEFAULT)
 
         # The latest version available
-        self.latest = get_highest_version(
-            self.name, self.platform, self.channel, self.easy_data, self.strict
-        )
+        self.latest = data.get("latest")
 
         # The name of the current versions update archive.
         # Will be used to check if the current archive is available for a
         # patch update
-        cv = self.current_version
+        cv = str(self.current_version)
         self._current_archive_name = LibUpdate._get_filename(
             self.name, cv, self.platform, self.easy_data
         )
 
         # Get filename of latest versions update archive
         self.filename = LibUpdate._get_filename(
-            self.name, self.latest, self.platform, self.easy_data
+            self.name, str(self.latest), self.platform, self.easy_data
         )
         assert self.filename is not None
 
@@ -479,7 +471,7 @@ class LibUpdate(object):
         ######Returns (str): User friendly version string
         """
         if self._version == "":
-            self._version = gen_user_friendly_version(self.latest)
+            self._version = gen_user_friendly_version(str(self.latest))
         return self._version
 
     def is_downloaded(self):
@@ -562,7 +554,7 @@ class LibUpdate(object):
             else:
                 log.debug("Starting patch download")
                 patch_success = False
-                if self.channel == "stable":
+                if self.current_version.channel == self.latest.channel:
                     patch_success = self._patch_update()
                 # Tested elsewhere
                 if patch_success:  # pragma: no cover

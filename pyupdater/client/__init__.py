@@ -309,15 +309,14 @@ class Client(object):
 
         # Config data to initialize update object
         data = {
-            "strict": strict,
             "update_urls": self.update_urls,
             "name": self.name,
-            "version": self.version,
+            "version": version,
+            "latest": latest,
             "easy_data": self.easy_data,
             "json_data": self.json_data,
             "data_dir": self.data_dir,
             "platform": self.platform,
-            "channel": channel,
             "app_name": self.app_name,
             "verify": self.verify,
             "max_download_retries": self.max_download_retries,

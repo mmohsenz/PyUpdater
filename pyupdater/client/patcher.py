@@ -74,10 +74,9 @@ class Patcher(object):
 
     def __init__(self, **kwargs):
         self.name = kwargs.get("name")
-        self.channel = kwargs.get("channel")
         self.json_data = kwargs.get("json_data")
         self.star_access_update_data = EasyAccessDict(self.json_data)
-        self.current_version = Version(kwargs.get("current_version"))
+        self.current_version = kwargs.get("current_version")
         self.latest_version = kwargs.get("latest_version")
         self.update_folder = kwargs.get("update_folder")
         self.update_urls = kwargs.get("update_urls", [])
@@ -269,7 +268,7 @@ class Patcher(object):
             versions = [1]
 
         # We only care about the current channel
-        versions = [v for v in versions if v.channel == self.channel]
+        versions = [v for v in versions if v.channel == self.current_version.channel]
 
         log.debug("Getting required patches")
         for i in versions:
