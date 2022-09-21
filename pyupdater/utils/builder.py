@@ -71,27 +71,25 @@ class Builder(object):  # pragma: no cover
         # Check for spec file or python script
         self._setup()
 
-        temp_name = get_system()
-        spec_file_path = os.path.join(self.spec_dir, temp_name + ".spec")
+        spec_file_path = os.path.join(self.spec_dir, self.app_name + ".spec")
 
         # Spec file used instead of python script
         if self.app_info["type"] == "spec":
             spec_file_path = self.app_info["name"]
         else:
             # Creating spec file from script
-            self._make_spec(temp_name)
+            self._make_spec()
 
         # Build executable
         self._build(spec_file_path)
 
         # Archive executable
-        self._archive(temp_name)
+        self._archive()
         finished = time.time() - start
         log.info("Build finished in {:.2f} seconds.".format(finished))
 
     def make_spec(self):
-        temp_name = get_system()
-        self._make_spec(temp_name, spec_only=True)
+        self._make_spec(spec_only=True)
 
     def _setup(self):
         # Create required directories
@@ -141,10 +139,10 @@ class Builder(object):  # pragma: no cover
 
     # Take args from PyUpdater then sanatize & combine to be
     # passed to pyinstaller
-    def _make_spec(self, temp_name, spec_only=False):
+    def _make_spec(self, spec_only=False):
         log.debug("App Info: %s", self.app_info)
 
-        self.pyi_args.append("--name={}".format(temp_name))
+        self.pyi_args.append("--name={}".format(self.app_name))
         if spec_only is True:
             log.debug("*** User generated spec file ***")
             log.debug("There could be errors")
@@ -200,44 +198,19 @@ class Builder(object):  # pragma: no cover
         build_args = [str(x) for x in build_args]
         pyi_build(build_args)
 
-    # Updates name of binary from mac to applications name
-    @staticmethod
-    def _mac_binary_rename(temp_name, app_name):
-        bin_dir = os.path.join(temp_name, "Contents", "MacOS")
-        plist = os.path.join(temp_name, "Contents", "Info.plist")
-        with ChDir(bin_dir):
-            os.rename("mac", app_name)
-
-        # We also have to update to ensure app launches correctly
-        with io.open(plist, "r", encoding="utf-8") as f:
-            plist_data = f.readlines()
-
-        new_plist_data = []
-        for d in plist_data:
-            if "mac" in d:
-                new_plist_data.append(d.replace("mac", app_name))
-            else:
-                new_plist_data.append(d)
-
-        with io.open(plist, "w", encoding="utf-8") as f:
-            for d in new_plist_data:
-                f.write(d)
-
     # Creates zip on windows and gzip on other platforms
-    def _archive(self, temp_name):
+    def _archive(self):
         # Now archive the file
         with ChDir(self.new_dir):
-            if os.path.exists(temp_name + ".app"):
+            if os.path.exists(self.app_name + ".app"):
                 log.debug("Got mac .app")
-                app_name = temp_name + ".app"
-                Builder._mac_binary_rename(app_name, self.app_name)
-            elif os.path.exists(temp_name + ".exe"):
+                app_name = self.app_name + ".app"
+            elif os.path.exists(self.app_name + ".exe"):
                 log.debug("Got win .exe")
-                app_name = temp_name + ".exe"
+                app_name = self.app_name + ".exe"
             else:
-                app_name = temp_name
+                app_name = self.app_name
             version = self.args.app_version
-            log.debug("Temp Name: %s", temp_name)
             log.debug("Appname: %s", app_name)
             log.debug("Version: %s", version)
 
@@ -247,11 +220,8 @@ class Builder(object):  # pragma: no cover
             )
             log.debug("Archive name: %s", filename)
             if self.args.keep is False:
-                if os.path.exists(temp_name):
-                    log.debug("Removing: %s", temp_name)
-                    remove_any(temp_name)
                 if os.path.exists(app_name):
-                    log.debug("Removing: %s", temp_name)
+                    log.debug("Removing: %s", app_name)
                     remove_any(app_name)
         log.debug("%s has been placed in your new folder\n", filename)
 

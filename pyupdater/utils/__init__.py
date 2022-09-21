@@ -268,34 +268,9 @@ def make_archive(name, target, version, archive_format):
          (str) - name of archive
     """
     log.debug("starting archive")
-    ext = os.path.splitext(target)[1]
-    temp_file = name + ext
-    log.debug("Temp file: %s", temp_file)
-    # Remove file if it exists. Found during testing...
-    if os.path.exists(temp_file):
-        paths.remove_any(temp_file)
-
-    if os.path.isfile(target):
-        shutil.copy(target, temp_file)
-    else:
-        shutil.copytree(target, temp_file, symlinks=True)
-        # renames the entry-point executable
-        file_ext = ".exe" if system.get_system() == "win" else ""
-        src_executable = temp_file + os.sep + target + file_ext
-        dst_executable = temp_file + os.sep + name + file_ext
-        # is an osx bundle app so does not need to fix the executable name
-        if ext != ".app":
-            shutil.move(src_executable, dst_executable)
-
-        # is a win folder so the manifest need to be renamed too
-        if system.get_system() == "win":
-            src_manifest = src_executable + ".manifest"
-            dst_manifest = dst_executable + ".manifest"
-            shutil.move(src_manifest, dst_manifest)
-
     file_dir = os.path.dirname(os.path.abspath(target))
     filename = "{}-{}-{}".format(
-        os.path.splitext(name)[0], system.get_system(), version
+        os.path.splitext(target)[0], system.get_system(), version
     )
     # Only use zip on windows.
     # Zip does not preserve file permissions on nix & mac
@@ -307,10 +282,7 @@ def make_archive(name, target, version, archive_format):
                 ext = "zip"
         else:
             ext = archive_format
-        output_filename = shutil.make_archive(filename, ext, file_dir, temp_file)
-
-    if os.path.exists(temp_file):
-        paths.remove_any(temp_file)
+        output_filename = shutil.make_archive(filename, ext, file_dir, target)
 
     log.debug("Archive output filename: %s", output_filename)
     return output_filename
