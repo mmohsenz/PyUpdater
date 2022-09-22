@@ -282,7 +282,13 @@ def make_archive(name, target, version, archive_format):
                 ext = "zip"
         else:
             ext = archive_format
-        output_filename = shutil.make_archive(filename, ext, file_dir, target)
+        if 'tar' in ext:
+            compression = 'z' if 'gz' in ext else 'j' if 'bz' in ext else ''
+            opts = f'-c{compression}f'
+            output_filename = f'{filename}.{ext}'
+            subprocess.run(['tar', opts, output_filename, target], check=True)
+        else:
+            output_filename = shutil.make_archive(filename, ext, file_dir, target)
 
     log.debug("Archive output filename: %s", output_filename)
     return output_filename
