@@ -2,8 +2,8 @@
 
 PyUpdater uses the libraries listed below.
 
-### appdirs
-https://github.com/ActiveState/appdirs/blob/master/LICENSE.txt
+### platformdirs
+https://github.com/platformdirs/platformdirs/blob/main/LICENSE
 
 
 ### bsdiff4

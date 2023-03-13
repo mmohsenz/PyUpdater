@@ -1,6 +1,6 @@
 # Installation
 PyUpdater depends on a few external libraries:
-[appdirs](https://pypi.python.org/pypi/appdirs/), [bsdiff4](https://github.com/ilanschnell/bsdiff4), [certifi](https://pypi.python.org/pypi/certifi), [dsdev-utils](https://pypi.python.org/pypi/dsdev-utils), [pyinstaller](https://github.com/pyinstaller/pyinstaller), [pynacl](https://pypi.org/project/PyNaCl/), [stevedore](https://pypi.python.org/pypi/stevedore) & [urllib3](https://pypi.python.org/pypi/urllib3).
+[platformdirs](https://pypi.python.org/pypi/platformdirs/), [bsdiff4](https://github.com/ilanschnell/bsdiff4), [certifi](https://pypi.python.org/pypi/certifi), [dsdev-utils](https://pypi.python.org/pypi/dsdev-utils), [pyinstaller](https://github.com/pyinstaller/pyinstaller), [pynacl](https://pypi.org/project/PyNaCl/), [stevedore](https://pypi.python.org/pypi/stevedore) & [urllib3](https://pypi.python.org/pypi/urllib3).
 
 #### Install Stable version
 

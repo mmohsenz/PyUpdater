@@ -29,7 +29,7 @@ import subprocess
 import sys
 import time
 
-import appdirs
+import platformdirs
 from dsdev_utils.paths import ChDir, remove_any
 import filelock
 import pytest
@@ -135,9 +135,9 @@ class TestExecutionExtraction(object):
                 # update with custom_dir is multiprocessing-safe
                 lock_path = "pyu.lock"
             else:
-                if not os.path.exists(appdirs.user_data_dir(APP_NAME)):
-                    os.makedirs(appdirs.user_data_dir(APP_NAME), exist_ok=True)
-                lock_path = os.path.join(appdirs.user_data_dir(APP_NAME), "pyu.lock")
+                if not os.path.exists(platformdirs.user_data_dir(APP_NAME)):
+                    os.makedirs(platformdirs.user_data_dir(APP_NAME), exist_ok=True)
+                lock_path = os.path.join(platformdirs.user_data_dir(APP_NAME), "pyu.lock")
 
             update_lock = filelock.FileLock(lock_path, LOCK_TIMEOUT)
 
@@ -265,9 +265,9 @@ class TestExecutionExtraction(object):
                 # update with custom_dir is multiprocessing-safe
                 lock_path = "pyu.lock"
             else:
-                if not os.path.exists(appdirs.user_data_dir(APP_NAME)):
-                    os.makedirs(appdirs.user_data_dir(APP_NAME), exist_ok=True)
-                lock_path = os.path.join(appdirs.user_data_dir(APP_NAME), "pyu.lock")
+                if not os.path.exists(platformdirs.user_data_dir(APP_NAME)):
+                    os.makedirs(platformdirs.user_data_dir(APP_NAME), exist_ok=True)
+                lock_path = os.path.join(platformdirs.user_data_dir(APP_NAME), "pyu.lock")
 
             update_lock = filelock.FileLock(lock_path, LOCK_TIMEOUT)
 
@@ -381,9 +381,9 @@ class TestExecutionRestart(object):
                 # update with custom_dir is multiprocessing-safe
                 lock_path = "pyu.lock"
             else:
-                if not os.path.exists(appdirs.user_data_dir(APP_NAME)):
-                    os.makedirs(appdirs.user_data_dir(APP_NAME), exist_ok=True)
-                lock_path = os.path.join(appdirs.user_data_dir(APP_NAME), "pyu.lock")
+                if not os.path.exists(platformdirs.user_data_dir(APP_NAME)):
+                    os.makedirs(platformdirs.user_data_dir(APP_NAME), exist_ok=True)
+                lock_path = os.path.join(platformdirs.user_data_dir(APP_NAME), "pyu.lock")
 
             update_lock = filelock.FileLock(lock_path, LOCK_TIMEOUT)
 
@@ -506,9 +506,9 @@ class TestExecutionRestart(object):
                 # update with custom_dir is multiprocessing-safe
                 lock_path = "pyu.lock"
             else:
-                if not os.path.exists(appdirs.user_data_dir(APP_NAME)):
-                    os.makedirs(appdirs.user_data_dir(APP_NAME), exist_ok=True)
-                lock_path = os.path.join(appdirs.user_data_dir(APP_NAME), "pyu.lock")
+                if not os.path.exists(platformdirs.user_data_dir(APP_NAME)):
+                    os.makedirs(platformdirs.user_data_dir(APP_NAME), exist_ok=True)
+                lock_path = os.path.join(platformdirs.user_data_dir(APP_NAME), "pyu.lock")
 
             update_lock = filelock.FileLock(lock_path, LOCK_TIMEOUT)
 

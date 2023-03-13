@@ -30,7 +30,7 @@ import os
 import tempfile
 import warnings
 
-import appdirs
+import platformdirs
 from dsdev_utils.app import app_cwd, FROZEN
 from dsdev_utils.helpers import (
     EasyAccessDict as _EAD,
@@ -164,7 +164,7 @@ class Client(object):
         else:  # pragma: no cover
             if data_dir is None:
                 # Getting platform specific user data directory
-                self.data_dir = appdirs.user_data_dir(self.app_name, self.company_name)
+                self.data_dir = platformdirs.user_data_dir(self.app_name, self.company_name)
             else:
                 self.data_dir = data_dir
 

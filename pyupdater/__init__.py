@@ -26,7 +26,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 import os
 
-from appdirs import user_log_dir
+from platformdirs import user_log_dir
 from dsdev_utils.logger import logging_formatter
 
 from pyupdater import settings

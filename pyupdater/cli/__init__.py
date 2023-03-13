@@ -26,7 +26,7 @@ from __future__ import unicode_literals
 import logging
 import sys
 
-from appdirs import user_log_dir
+from platformdirs import user_log_dir
 
 from pyupdater import __version__, settings
 from pyupdater.cli import commands
